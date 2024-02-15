@@ -28,6 +28,30 @@ new class extends Component
         $this->editing = $quill;
         $this->getQuills();
     }
+
+    /**
+     *  the listing (quill.list) componenet has to listen both for when
+     * we update (quill-update) and editing cancel(quill-edit-cancelled)
+     * 
+     * if quill-updated event is dispatched, the listing will be updated
+     * if quill-edit-canceled event is dispatched, the property will return null
+     * our default state "public ?Quill $editing = null" and the edit form becomes
+     * will become no longer displayed
+     */
+
+    #[On('quill-edit-canceled')]
+    #[On('quill-updated')] 
+    public function disableEditing(): void
+    {
+        $this->editing = null;
+ 
+        $this->getQuills();
+    } 
+    /**
+     * when the editing is canceled we call the default state "null"
+     * we return our object back to the default behaviour quill
+    */
+
 }; ?>
  
 <div class="mt-6 bg-white shadow-sm rounded-lg divide-y">
@@ -64,7 +88,7 @@ new class extends Component
                     @endif
                 </div>
                 @if ($quill->is($editing)) 
-                    <livewire:quills.edit :quill="$quill" :key="$quill->id" />
+                    <livewire:quill.edit :quill="$quill" :key="$quill->id" />
                 @else
                     <p class="mt-4 text-lg text-gray-900">{{ $quill->message }}</p>
                 @endif 
