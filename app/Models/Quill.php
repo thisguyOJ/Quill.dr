@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Models;
-
+use App\Events\QuillCreated;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -12,6 +12,10 @@ class Quill extends Model
 
     protected $fillable = [ // enable mass assignment for safe attributes by marking them as "fillable"
         'message',
+    ];
+
+    protected $dispatchesEvents = [
+        'created' => QuillCreated::class,
     ];
 
     public function user(): BelongsTo {

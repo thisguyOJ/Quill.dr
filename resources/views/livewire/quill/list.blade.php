@@ -29,6 +29,12 @@ new class extends Component
         $this->getQuills();
     }
 
+    public function delete(Quill $quill): void {
+        $this->authorize('delete', $quill);
+        $quill->delete();
+        $this->getQuills();
+    }
+
     /**
      *  the listing (quill.list) componenet has to listen both for when
      * we update (quill-update) and editing cancel(quill-edit-cancelled)
@@ -82,6 +88,9 @@ new class extends Component
                             <x-slot name="content">
                                 <x-dropdown-link wire:click="edit({{ $quill->id }})">
                                     {{ __('Edit') }}
+                                </x-dropdown-link>
+                                <x-dropdown-link wire:click="delete({{ $quill->id }})" wire:confirm="Are you sure you want to delete the quill?">
+                                    {{ __('Delete') }}
                                 </x-dropdown-link>
                             </x-slot>
                         </x-dropdown>

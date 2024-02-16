@@ -43,7 +43,7 @@ class QuillPolicy
 
     public function update(User $user, Quill $quill): bool
     {
-        return $quill->$user()->$is($user);
+        return $quill->user_id === $user->id;
     }
 
     /**
@@ -52,6 +52,7 @@ class QuillPolicy
     public function delete(User $user, Quill $quill): bool
     {
         //
+        return $this->update($user, $quill);
     }
 
     /**
