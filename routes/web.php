@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\QuillController;
 
 /*
@@ -14,11 +15,9 @@ use App\Http\Controllers\QuillController;
 |
 */
 
-Route::view('/', 'welcome');
+Route::get('/', [QuillController::class, 'index'])
+    ->middleware(['auth', 'verified'])->name('quill');
 
-Route::view('dashboard', 'dashboard')
-    ->middleware(['auth', 'verified'])
-    ->name('dashboard');
 
 Route::view('profile', 'profile')
     ->middleware(['auth'])
